@@ -41,7 +41,6 @@ class Bot:
 class QuoteBot(Bot):
     def _message_handler(self, update, context):
         to_quote = True
-
         if update.message.text == 'Don\'t quote me please':
             to_quote = False
 
