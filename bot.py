@@ -1,9 +1,12 @@
 from telegram.ext import Updater, MessageHandler, Filters
 from utils import search_download_youtube_video
 from loguru import logger
+import os.path
+
 
 
 class Bot:
+    download_path_video = []
 
     def __init__(self, token):
         # create frontend object to the bot programmer
@@ -18,19 +21,22 @@ class Bot:
         logger.info(f'{self.__class__.__name__} is up and listening to new messages....')
         self.updater.idle()
 
-    def _message_handler(self, update, context):
-        """Main messages handler"""
-        self.send_text(update, f'Your original message: {update.message.text}')
 
-    def send_video(self, update, context, file_path):
-        """Sends video to a chat"""
-        context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)
+    def _message_handler(self, update, context):
+            """Main messages handler"""
+            self.send_text(update, f'Your original message: {update.message.text}')
+
+
+
 
     def send_text(self, update,  text, quote=False):
         """Sends text to a chat"""
         # retry https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
         update.message.reply_text(text, quote=quote)
 
+    def send_video(self, update, context, file_path):
+        """Sends video to a chat"""
+        context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)
 
 class QuoteBot(Bot):
     def _message_handler(self, update, context):
@@ -43,7 +49,16 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    pass
+
+    def _message_handler(self, update, context):
+
+        for search_song in Bot.download_path_video:
+            basename=os.path.basename(search_song)
+            if basename==self.update.message.text:
+                 return self.send_video(update, self.update.message.text, search_song)
+
+        download_path_video = search_download_youtube_video(update.message.text)
+        return self.send_video(update, self.update.message.text, download_path_video)
 
 
 if __name__ == '__main__':
