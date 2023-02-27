@@ -8,9 +8,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass2', usernameVariable: 'user2')])
 
 
-                  sh "sudo docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
-                  sh "sudo docker login --username $user2 --password $pass2"
-                  sh "sudo docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+                  bat "sudo docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
+                  bat "sudo docker login --username $user2 --password $pass2"
+                  bat "sudo docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                 }
             }
         }
