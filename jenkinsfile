@@ -4,12 +4,10 @@ pipeline {
     stages {
         stage('Build Bot app') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'git-hub-shani', passwordVariable: 'pass1', usernameVariable: 'user1')]) {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass2', usernameVariable: 'user2')])
-
-
+               withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass', usernameVariable: 'user')]) {
+   
                   sh "sudo docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
-                  sh "sudo docker login --username $user2 --password $pass2"
+                  sh "sudo docker login --username $user --password $pass"
                   sh "sudo docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                 }
             }
@@ -23,6 +21,5 @@ pipeline {
             steps {
                 sh 'echo echo "stage III..."'
             }
-        }
-    }
+      }
 }
