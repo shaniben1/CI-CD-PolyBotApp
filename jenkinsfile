@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    options {
+             buildDiscarder(logRotator(daysToKeepStr: '150'))
+              disableConcurrentBuilds()
+              timestamps()
+}
 
     stages {
         stage('Build Bot app') {
@@ -23,4 +28,15 @@ pipeline {
            }
       }
   }
+  
+  post{
+    always{
+        sh "docker image prune -a"
+    }
+  }
+  
+  
+  
+  
+  
 }
