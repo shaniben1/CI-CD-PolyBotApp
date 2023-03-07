@@ -1,16 +1,19 @@
 pipeline {
     agent any
+    options {
+             buildDiscarder(logRotator(daysToKeepStr: '150'))
+              disableConcurrentBuilds()
+              timestamps()
+}
 
     stages {
         stage('Build Bot app') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'git-hub-shani', passwordVariable: 'pass1', usernameVariable: 'user1')]) {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass2', usernameVariable: 'user2')])
-
-
-                  sh "sudo docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
-                  sh "sudo docker login --username $user2 --password $pass2"
-                  sh "sudo docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+               withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass', usernameVariable: 'user')]) {
+   
+                  sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
+                  sh "docker login --username $user --password $pass"
+                  sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                 }
             }
         }
@@ -22,7 +25,18 @@ pipeline {
         stage('Stage III ...') {
             steps {
                 sh 'echo echo "stage III..."'
-            }
-        }
+           }
+      }
+  }
+  
+  post{
+    always{
+        sh "docker image prune -a"
     }
+  }
+  
+  
+  
+  
+  
 }
