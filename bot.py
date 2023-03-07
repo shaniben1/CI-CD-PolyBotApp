@@ -65,6 +65,7 @@ if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
 
+
     my_bot = Bot(_token.strip())
     my_bot.start()
 
