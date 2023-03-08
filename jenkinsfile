@@ -8,6 +8,7 @@ pipeline {
               
               retry(2)
               
+              timestamps
               timeout(1)
 }
 
