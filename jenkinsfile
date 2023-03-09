@@ -1,7 +1,7 @@
 pipeline {
 
         options {
-              buildDiscarder(logRotator(daysToKeepStr: '100', numToKeepStr: '10'))
+              buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
               disableConcurrentBuilds()
               timestamps()
               retry(2)
