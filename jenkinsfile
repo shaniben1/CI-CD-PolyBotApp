@@ -1,18 +1,21 @@
 pipeline {
-    agent {
-    docker {
-        image 'jenkins-agent:latest'
-        args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-    }
 
-    }
-    options {
+        options {
               buildDiscarder(logRotator(daysToKeepStr: '100', numToKeepStr: '10'))
               disableConcurrentBuilds()
               timestamps()
               retry(2)
                timeout(time: 3, unit: 'MINUTES')
-}
+    }
+
+        
+    agent{
+         docker {
+                 image 'jenkins-agent:latest'
+                  args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+                }
+    }
+
 
     stages {
         stage('Build Bot app') {
