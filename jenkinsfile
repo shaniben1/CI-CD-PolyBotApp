@@ -1,15 +1,17 @@
 pipeline {
-    agent any
+    agent {
+    docker {
+        image 'jenkins-agent:latest'
+        args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+    }
+
+    }
     options {
-              buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', 
-              daysToKeepStr: '50', numToKeepStr: '10'))
-               
+              buildDiscarder(logRotator(daysToKeepStr: '100', numToKeepStr: '10'))
               disableConcurrentBuilds()
-              
+              timestamps()
               retry(2)
-              
-              timestamps
-              timeout(1)
+               timeout(time: 3, unit: 'MINUTES')
 }
 
     stages {
