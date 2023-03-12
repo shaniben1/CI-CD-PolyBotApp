@@ -1,6 +1,6 @@
 ignore:
   snyk-vulnid:
-    'SNYK-DEBIANI0-ZLIB'-2976149 :
-    - '* > jenkinsfile':
+    SNYK-DEBIAN10-ZLIB-2976149:
+    - '*':
       reason: 'ignore for now'  //optional ; the reason why you are ignoring the vulnerability!
-      //expires: 'datetime string'
+      expires: '12/12/2023'
