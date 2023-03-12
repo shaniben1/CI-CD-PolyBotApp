@@ -1,11 +1,11 @@
 pipeline {
 
-        options {
-              buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
-              disableConcurrentBuilds()
-              timestamps()
-              retry(2)
-               timeout(time: 3, unit: 'MINUTES')
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
+        disableConcurrentBuilds()
+        timestamps()
+        retry(2)
+        timeout(time: 3, unit: 'MINUTES')
     }
 
         
@@ -16,26 +16,32 @@ pipeline {
            }
     }
 
+    //insert credential to environment variable
+    environment{
+        SNYK_TOKEN=credentials('snyk-token')
+    }
+
 
     stages {
+
         stage('Build Bot app') {
             steps {
-               withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass', usernameVariable: 'user')]) {
-   
                   sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
-                  sh "docker login --username $user --password $pass"
-                  sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                 }
             }
-        }
-        stage('Stage II') {
+
+        stage('snyk test to Bot image') {
             steps {
-                sh 'echo "stage II..."'
+                sh "snyk container test --severity-threshold=high shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
             }
         }
-        stage('Stage III ...') {
+
+        stage('push image to rep') {
             steps {
-                sh 'echo echo "stage III..."'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass', usernameVariable: 'user')])
+
+                    sh "docker login --username $user --password $pass"
+                    sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
            }
       }
   }
