@@ -30,7 +30,7 @@ pipeline {
                 }
             }
 
-        stage('snyk test to Bot image') {
+        stage('snyk test - Bot image') {
             steps {
                 sh "snyk container test --severity-threshold=high shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
             }
