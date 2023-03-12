@@ -1,6 +1,5 @@
 ignore:
-  snyk-vulnid:
-    SNYK-DEBIAN10-ZLIB-2976149:
-    - '*':
-      reason: 'ignore for now'  //optional ; the reason why you are ignoring the vulnerability!
-      expires: '12/12/2023'
+   SNYK-DEBIAN10-ZLIB-2976149:
+         - '*':
+             reason: 'ignore for now'
+             expires: '12/12/2023'
