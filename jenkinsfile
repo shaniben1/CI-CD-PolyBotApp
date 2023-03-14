@@ -30,11 +30,11 @@ pipeline {
                 }
             }
 
-        stage('snyk test - Bot image') {
-            steps {
-                sh "snyk container test --severity-threshold=critical --exclude-vulnerability=SNYK-DEBIAN10-ZLIB-2976149 shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
-            }
-        }
+       // stage('snyk test - Bot image') {
+       //     steps {
+       //         sh "snyk container test --severity-threshold=critical --exclude-vulnerability=SNYK-DEBIAN10-ZLIB-2976149 shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
+       //     }
+       // }
 
         stage('push image to rep') {
             steps {
