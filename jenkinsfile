@@ -32,7 +32,7 @@ pipeline {
 
         stage('snyk test - Bot image') {
             steps {
-                sh "(snyk container test --severity-threshold=critical) && (ignore --id='SNYK-DEBIAN10-ZLIB-2976149' --expiry='2021-01-10' --reason='Module not affected by this vulnerability' shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile)"
+                sh "snyk container test --severity-threshold=critical --policy-path=C:/Users/Shani/PycharmProjects/PolyBot/.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
             }
         }
 
