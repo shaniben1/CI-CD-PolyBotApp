@@ -38,19 +38,20 @@ pipeline {
 
         stage('push image to rep') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass', usernameVariable: 'user')])
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-shani', passwordVariable: 'pass', usernameVariable: 'user')]){
 
                     sh "docker login --username $user --password $pass"
                     sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+                    }
            }
       }
   }
   
-  post{
-    always{
-        sh "docker image prune -a"
-    }
-  }
+  //post{
+    //always{
+       // sh "docker image prune -a"
+   // }
+ // }
   
   
   
