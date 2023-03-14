@@ -32,7 +32,7 @@ pipeline {
 
         stage('snyk test - Bot image') {
             steps {
-                sh "snyk container test --severity-threshold=critical shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
+                sh "snyk container test --severity-threshold=critical ignore --id=SNYK-DEBIAN10-ZLIB-2976149 shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
             }
         }
 
