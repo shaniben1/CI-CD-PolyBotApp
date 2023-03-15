@@ -47,11 +47,11 @@ pipeline {
       }
   }
   
-  //post{
-    //always{
-       // sh "docker image prune -a"
-   // }
- // }
+  post{
+    always{
+        sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+    }
+  }
   
   
   
