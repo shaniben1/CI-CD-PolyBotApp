@@ -1,4 +1,3 @@
-
 ignore:
   SNYK-DEBIAN10-ZLIB-2976149:
     - '*':
