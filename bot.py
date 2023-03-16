@@ -4,8 +4,8 @@ from loguru import logger
 import os.path
 
 
-
 class Bot:
+
     download_path_video = []
 
     def __init__(self, token):

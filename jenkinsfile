@@ -24,6 +24,23 @@ pipeline {
 
     stages {
 
+        stage('unit test') {
+            steps {
+                // withCredentials([string(credentialsId: 'telegram-poly-bot-token', variable: 'TOKEN')]) {
+                // }
+                withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
+                    sh "cp ${TOKEN_FILE} ./.telegramToken"
+                    sh 'pip3 install --no-cache-dir -r requirements.txt'
+                    sh 'python3 -m pytest --junitxml results.xml tests/*.py'
+                }
+            }
+            post {
+                 always {
+                     junit allowEmptyResults: true, testResults: 'results.xml'
+               }
+            }
+
+
         stage('Build Bot app') {
             steps {
                   sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
