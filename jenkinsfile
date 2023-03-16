@@ -48,6 +48,7 @@ pipeline {
                 }
             }
 
+
         stage('snyk test - Bot image') {
             steps {
                 sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
@@ -61,17 +62,19 @@ pipeline {
                     sh "docker login --username $user --password $pass"
                     sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                     }
+
            }
+
       }
   }
   
-  post{
-    always{
-        sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
-    }
-  }
+
   
-  
+        post{
+            always{
+                sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+                  }
+            }
   
   
   
