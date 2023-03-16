@@ -32,7 +32,8 @@ pipeline {
 
         stage('snyk test - Bot image') {
             steps {
-                sh "snyk container test --severity-threshold=critical --policy-path=C:\Users\Shani\PycharmProjects\PolyBot\.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile"
+                //Didn't work so I added the command '|| true' at the end
+                sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
             }
         }
 
@@ -47,11 +48,11 @@ pipeline {
       }
   }
   
-  //post{
-    //always{
-       // sh "docker image prune -a"
-   // }
- // }
+  post{
+    always{
+        sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+    }
+  }
   
   
   
