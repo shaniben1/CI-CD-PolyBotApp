@@ -26,16 +26,18 @@ pipeline {
 
     stages {
 
-        stage('unit test') {
+        stage('Test') {
             steps {
                 withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
                     sh "cp ${TOKEN_FILE} ./.telegramToken"
                     sh 'pip3 install --no-cache-dir -r requirements.txt'
                     sh 'python3 -m pytest --junitxml results.xml tests/*.py'
+                    sh "python3 -m pylint tests/*.py"
                 }
             }
             post {
                  always {
+                     //display the tests results in the readable form
                      junit allowEmptyResults: true, testResults: 'results.xml'
                }
             }
