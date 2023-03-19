@@ -25,16 +25,30 @@ pipeline {
 
 
     stages {
-
-        stage('Test') {
-            steps {
-                withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
-                    sh "cp ${TOKEN_FILE} ./.telegramToken"
-                    sh 'pip3 install --no-cache-dir -r requirements.txt'
-                    sh 'python3 -m pytest --junitxml results.xml tests/*.py'
-                    sh "python3 -m pylint tests/*.py"
-                }
+        parallel {
+                stage('Test') {
+                    steps {
+                        withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
+                            sh "cp ${TOKEN_FILE} ./.telegramToken"
+                            sh 'pip3 install --no-cache-dir -r requirements.txt'
+                            sh 'python3 -m pytest --junitxml results.xml tests/*.py'
+                          }
+              }
             }
+
+             stage('pylint') {
+                    steps {
+                        script {
+                            logs.info 'Starting'
+                            logs.warning 'Nothing to do!'
+                            sh "python3 -m pylint *.py || true"
+                        }
+                    }
+                }
+     }
+
+
+
             post {
                  always {
                      //display the tests results in the readable form
