@@ -18,6 +18,7 @@ pipeline {
 
 
     //insert credential to environment variable
+    //insert to specific environment variable (must to this name: SNYK_TOKEN) my snyk's token
     environment{
         SNYK_TOKEN=credentials('snyk-token')
     }
@@ -27,8 +28,6 @@ pipeline {
 
         stage('unit test') {
             steps {
-                // withCredentials([string(credentialsId: 'telegram-poly-bot-token', variable: 'TOKEN')]) {
-                // }
                 withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
                     sh "cp ${TOKEN_FILE} ./.telegramToken"
                     sh 'pip3 install --no-cache-dir -r requirements.txt'
