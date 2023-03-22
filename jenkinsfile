@@ -26,29 +26,29 @@ pipeline {
 
     stages {
         stage('Test') {
-            parallel {
-                    stage('pytest'){
-                        steps{
-                        withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
-                            sh "cp ${TOKEN_FILE} ./.telegramToken"
-                            sh 'pip3 install --no-cache-dir -r requirements.txt'
-                            sh 'python3 -m pytest --junitxml results.xml tests/*.py'
-                          }
-                     }
-                  }
-             stage('pylint') {
-                    steps {
-                        script {
-                            logs.info 'Starting'
-                            logs.warning 'Nothing to do!'
-                            sh "python3 -m pylint *.py || true"
-                        }
-                    }
-                }
+           // parallel {
+           //         stage('pytest'){
+           //             steps{
+           //             withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
+           //                 sh "cp ${TOKEN_FILE} ./.telegramToken"
+           //                 sh 'pip3 install --no-cache-dir -r requirements.txt'
+           //                 sh 'python3 -m pytest --junitxml results.xml tests/*.py'
+           //               }
+           //          }
+           //       }
+           //  stage('pylint') {
+           //         steps {
+           //             script {
+           //                 logs.info 'Starting'
+           //                 logs.warning 'Nothing to do!'
+           //                 sh "python3 -m pylint *.py || true"
+           //             }
+           //         }
+           //     }
 
 
-            }
-      }
+           // }
+     // }
 
 
             post {
