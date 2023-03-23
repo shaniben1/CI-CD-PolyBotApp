@@ -76,12 +76,15 @@ pipeline {
 
     }//close stages
 
-       post{
+
+
+}//close pipeline
+  
+ post{
             always{
                 sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                   }
             }
 
-}//close pipeline
-  
 
+         }
