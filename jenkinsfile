@@ -44,6 +44,7 @@ pipeline {
                          //            logs.warning 'Nothing to do!'
                                      sh "python3 -m pylint *.py || true"
                          //            }
+
                               }
                    }//close stage pylint
            }//close parallel
