@@ -39,11 +39,11 @@ pipeline {
 
                    stage('pylint') {
                          steps {
-                              script {
-                                     logs.info 'Starting'
-                                     logs.warning 'Nothing to do!'
+                         //     script {
+                         //            logs.info 'Starting'
+                         //            logs.warning 'Nothing to do!'
                                      sh "python3 -m pylint *.py || true"
-                                     }
+                         //            }
                               }
                    }//close stage pylint
            }//close parallel
@@ -74,7 +74,7 @@ pipeline {
 
 
 
-    }//close stages
+    }//close pipeline
 
     //post{
         //    always{
@@ -84,7 +84,7 @@ pipeline {
 
 
 
-//}//close pipeline
+
   
 
 
