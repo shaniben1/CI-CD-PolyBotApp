@@ -35,7 +35,7 @@ pipeline {
                             sh 'python3 -m pytest --junitxml results.xml tests/*.py'
                                      }//close Credentials
                              }//close steps
-                        }//close  stage
+                        }//close stage pytest
 
                    stage('pylint') {
                          steps {
@@ -74,12 +74,13 @@ pipeline {
         }//close stage push
 
 
+}//close stages
       post{
             always{
                 sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                   }
           }
-    }//close stages
+
 }//close pipeline
 
 
