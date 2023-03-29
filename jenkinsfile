@@ -2,6 +2,10 @@
 //@Library('shared-lib-int') _
 library 'shared-lib-int@main'
 
+//log.generic-build(snykToken,"telegramToken",app_name,dockerhub_idJenkins)
+
+
+
 
 pipeline {
 
@@ -40,6 +44,12 @@ pipeline {
                             sh 'python3 -m pytest --junitxml results.xml tests/*.py'
                                      }//close Credentials
                              }//close steps
+
+                             post {
+                                  always {
+                                      junit allowEmptyResults: true, testResults: 'results.xml'
+                                         }
+                                  }
                         }//close stage pytest
 
                    stage('pylint') {
