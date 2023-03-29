@@ -45,12 +45,6 @@ pipeline {
                             sh 'python3 -m pytest --junitxml results.xml tests */.py'
                                      }//close Credentials
                              }//close steps
-
-                           /*   post {
-                                  always {
-                                      junit allowEmptyResults: true, testResults: 'results.xml'
-                                         }
-                                  } */
                         }//close stage pytest
 
                    stage('pylint') {
@@ -60,25 +54,25 @@ pipeline {
                                      log.warning 'Nothing to do!'
                                      sh "python3 -m pylint *.py || true"
                                      }
+                               }
+                                  }//close stage pylint
 
-                              }
-                   }//close stage pylint
-           }//close parallel
-        }//close stage Test
+                  }//close parallel
+                }//close stage Test
 
 
         stage('Build Bot app') {
              steps {
                   sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
                    }
-            }
+                              }
 
 
         stage('snyk test - Bot image') {
             steps {
                 sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
                   }
-            }
+                                        }
 
         stage('push image to rep') {
             steps {
@@ -86,11 +80,11 @@ pipeline {
                     sh "docker login --username $user --password $pass"
                     sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                     }//close Credentials
-                  }//close steps
-        }//close stage push
+                                  }//close steps
+                   }//close stage push
 
 
-}//close stages
+    }//close stages
       post{
             always{
                 sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
