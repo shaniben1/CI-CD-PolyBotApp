@@ -1,11 +1,10 @@
 
-//@Library('shared-lib-int') _
-//library 'shared-lib-int@main'
+//@Library('shared-lib-int')
+library 'shared-lib-int@main'
 
 
-log.generic-build('snykToken','telegramToken','polybot','dockerhub')
+//log.generic-build('snykToken','telegramToken','polybot','dockerhub')
 
-/*
 
 
 
@@ -104,6 +103,5 @@ pipeline {
 
 
   
- */
 
 
