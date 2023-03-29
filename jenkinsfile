@@ -47,11 +47,11 @@ pipeline {
                                      }//close Credentials
                              }//close steps
 
-                             post {
+                           /*   post {
                                   always {
                                       junit allowEmptyResults: true, testResults: 'results.xml'
                                          }
-                                  }
+                                  } */
                         }//close stage pytest
 
                    stage('pylint') {
