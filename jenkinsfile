@@ -2,8 +2,8 @@
 //@Library('shared-lib-int') _
 //library 'shared-lib-int@main'
 
-app_name='polybot'
-log.generic-build('snykToken','telegramToken',app_name,'dockerhub')
+
+log.generic-build('snykToken','telegramToken','polybot','dockerhub')
 
 /*
 
