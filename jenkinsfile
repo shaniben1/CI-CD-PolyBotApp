@@ -3,17 +3,7 @@
 library 'shared-lib-int@main'
 
 //dict
-generic-build('snykToken','telegramToken','polybot','dockerhub')
-
-
-
-
-
-
-
-
-
-/*
+//generic-build('snykToken','telegramToken','polybot','dockerhub')
 
 
 pipeline {
@@ -31,7 +21,7 @@ pipeline {
          docker{
               image 'jenkins-agent:latest'
               args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-           }
+               }
     }
 
 
@@ -51,8 +41,7 @@ pipeline {
                         withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
                             sh "cp ${TOKEN_FILE} ./.telegramToken"
                             sh 'pip3 install --no-cache-dir -r requirements.txt'
-                            sh 'python3 -m pytest --junitxml results.xml tests */
-/*.py'
+                            sh 'python3 -m pytest --junitxml results.xml tests/*.py'
                                      }//close Credentials
                                  }//close catchError
                              }//close steps
@@ -107,6 +96,6 @@ pipeline {
 
 
   
- */
+
 
 
