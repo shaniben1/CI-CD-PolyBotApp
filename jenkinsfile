@@ -3,9 +3,13 @@
 library 'shared-lib-int@main'
 
 //dict
-//generic-build('snykToken','telegramToken','polybot','dockerhub')
+generic-build('snykToken','telegramToken','polybot','dockerhub')
 
 
+
+
+
+/*
 pipeline {
 
     options {
@@ -95,6 +99,7 @@ pipeline {
 
 }//close pipeline
 
+*/
 
 
   
