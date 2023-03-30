@@ -56,9 +56,10 @@ pipeline {
                                      sh "python3 -m pylint *.py || true"
                                      }
                                   }//close catchError
-                               }
-                  }//close parallel
-                }//close stage Test
+                               }//close steps
+                           }//close stage pylint
+                   }//close parallel
+              }//close stage Test
 
 
         stage('Build Bot app') {
@@ -79,9 +80,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
                     sh "docker login --username $user --password $pass"
                     sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
-                    }//close Credentials
-                                  }//close steps
-                   }//close stage push
+                     }//close Credentials
+                  }//close steps
+         }//close stage push
 
 
     }//close stages
