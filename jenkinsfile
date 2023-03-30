@@ -37,7 +37,7 @@ pipeline {
            parallel {
                    stage('pytest'){
                         steps{
-                        catchError(message:'pytest ERROR',buildResult:'UNSTABLE',stageResult:'UNSTABLE'){
+                        catchError(message:'pytest ERROR-->even this fails,we continue on',buildResult:'UNSTABLE',stageResult:'UNSTABLE'){
                         withCredentials([file(credentialsId: 'telegramToken', variable: 'TOKEN_FILE')]) {
                             sh "cp ${TOKEN_FILE} ./.telegramToken"
                             sh 'pip3 install --no-cache-dir -r requirements.txt'
@@ -49,7 +49,7 @@ pipeline {
 
            stage('pylint') {
                          steps {
-                         catchError(message:'pytest ERROR',buildResult:'UNSTABLE',stageResult:'UNSTABLE'){
+                         catchError(message:'pylint ERROR-->even this fails,we continue on',buildResult:'UNSTABLE',stageResult:'UNSTABLE'){
                               script {
                                      log.info 'Starting'
                                      log.warning 'Nothing to do!'
