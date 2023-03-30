@@ -5,7 +5,7 @@
 
 
 //dict
-generic-build('snykToken','telegramToken','polybot','dockerhub')
+generic-build("snykToken","telegramToken","polybot","dockerhub")
 
 
 
