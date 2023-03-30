@@ -1,6 +1,8 @@
 
 
-library 'shared-lib-int@main'
+//library 'shared-lib-int@main'
+@Library("shared-lib-int") _
+
 
 //dict
 generic-build('snykToken','telegramToken','polybot','dockerhub')
