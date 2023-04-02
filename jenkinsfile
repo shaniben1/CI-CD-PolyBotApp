@@ -78,7 +78,7 @@ pipeline {
                     sh "docker login --username $user --password $pass"
                     sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
                     }//close Credentials
-                                  }//close steps
+                            }//close steps
                    }//close stage push
 
 
