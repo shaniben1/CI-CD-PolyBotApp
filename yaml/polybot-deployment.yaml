@@ -1,0 +1,19 @@
+piVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polybot-deployment
+spec:
+  selector:
+    matchLabels:
+      app: polybot
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: polybot
+    spec:
+      containers:
+      - name: polybot
+        image: shaniben/shani-repo:poly-bot-106
+      imagePullSecrets:
+      - name: polybotsecret
