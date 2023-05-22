@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polybot-deployment
+spec:
+  selector:
+    matchLabels:
+      app: polybot
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: polybot
+    spec:
+      volumes:
+        - name: pv-storage
+            persistentVolumeClaim:
+              claimName: polybot-pvc
+
+      containers:
+        - name: polybot
+          image: shaniben/shani-repo:poly-bot-106
+          volumeMounts:
+            - mountPath: "/home/ec2-user/PolyBot/pvc-polybot"
+                name: pv-storage
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: polybotsecret
+                  key: token
+              imagePullSecrets:
+                - name: secretdockerhub
+
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "55Mi"
+            limits:
+              cpu: "1"
+              memory: "90Mi"
