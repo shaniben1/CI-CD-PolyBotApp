@@ -19,7 +19,7 @@ pipeline {
     }
 
 
-     agent {
+    agent {
     kubernetes {
 
       inheritFrom 'jenkins'
