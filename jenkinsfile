@@ -2,7 +2,7 @@
 
 library 'shared-lib-int@main'
 //@Library("shared-lib-int") _
-
+import hudson.*;
 
 //dict
 //generic-build("snykToken","telegramToken","polybot","dockerhub")
@@ -17,10 +17,11 @@ pipeline {
         //retry(2)
         timeout(time: 3, unit: 'MINUTES')
     }
-    agent {
+
+     agent {
     kubernetes {
 
-
+      inheritFrom 'jenkins'
       yaml '''
         apiVersion: v1
         kind: Pod
@@ -30,11 +31,12 @@ pipeline {
         spec:
           containers:
           - name: jenkins-agent
-            image: 'jenkins-agent:latest'
+            image: jenkins-agent:latest
 
         '''
     }
   }
+
 
 //    agent{
 //        docker{
