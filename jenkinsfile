@@ -18,13 +18,28 @@ pipeline {
         timeout(time: 3, unit: 'MINUTES')
     }
 
-        
-    agent{
-         docker{
-              image 'jenkins-agent:latest'
-              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-               }
+agent {
+    kubernetes {
+
+
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: jenkins-agent
+            image: jenkins-agent:latest
+
+        '''
     }
+  }
+
+//    agent{
+//        docker{
+//              image 'jenkins-agent:latest'
+//              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+//               }
+//    }
 
 
     //insert credential to environment variable
