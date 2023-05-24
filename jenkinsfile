@@ -18,6 +18,7 @@ pipeline {
         timeout(time: 3, unit: 'MINUTES')
     }
  agent {
+
     kubernetes {
 
       inheritFrom 'jenkins'
