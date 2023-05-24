@@ -18,7 +18,6 @@ pipeline {
         timeout(time: 3, unit: 'MINUTES')
     }
 
-
     agent {
     kubernetes {
 
@@ -31,12 +30,12 @@ pipeline {
             some-label: jenkins-eks-pod
         spec:
           containers:
-          - name: jenkins-agent
-            image: shaniben/shani-repo:jenkins
+            - name: jenkins-agent
+              image: shaniben/shani-repo:jenkins
 
         '''
-    }
-  }
+                }
+             }
 
 
 //    agent{
