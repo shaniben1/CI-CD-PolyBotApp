@@ -28,7 +28,6 @@ pipeline {
         metadata:
           name: jenkins
           namespace: jenkins
-        metadata:
           labels:
             some-label: jenkins-eks-pod
         spec:
