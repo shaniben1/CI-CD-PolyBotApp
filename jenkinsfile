@@ -17,27 +17,27 @@ pipeline {
         //retry(2)
         timeout(time: 3, unit: 'MINUTES')
     }
+ agent {
+    kubernetes {
 
-     agent {
-        kubernetes {
-            label "build-pod"
-            cloud "kubernetes"
-            yaml '''
-apiVersion: v1
-kind: Pod
-metadata:
-  namespace: jenkins
-  labels:
-    job: bootvar-build-pod
-spec:
-  containers:
-  - name: jenkins-agent
-    image: shaniben/shani-repo:jenkins
-    tty: true
+      inheritFrom 'jenkins'
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: jenkins
+          namespace: jenkins
+          labels:
+            some-label: jenkins-eks-pod
+        spec:
+          containers:
+            - name: jenkins-agent
+              image: shaniben/shani-repo:jenkins
 
-'''
-        }
-    }
+        '''
+                }
+             }
+
 
 
 //    agent{
