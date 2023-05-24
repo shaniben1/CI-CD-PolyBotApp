@@ -25,6 +25,11 @@ pipeline {
       yaml '''
         apiVersion: v1
         kind: Pod
+        metadata:
+          name: jenkins
+          namespace: jenkins
+          labels:
+            app.kubernetes.io/name: jenkinsAgent
         spec:
           containers:
             - name: jenkins-agent
