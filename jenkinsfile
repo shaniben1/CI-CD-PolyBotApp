@@ -25,11 +25,6 @@ pipeline {
       yaml '''
         apiVersion: v1
         kind: Pod
-        metadata:
-          name: jenkins
-          namespace: jenkins
-          labels:
-            some-label: jenkins-eks-pod
         spec:
           containers:
             - name: jenkins-agent
