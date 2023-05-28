@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nginx.fullname" . }}
+  labels:
+    {{- include "nginx.labels" . | indent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "nginx.labels" . | indent 6 }}
+
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        {{- include "nginx.labels" . | indent 8 }}
+    spec:
+      volumes:
+        - name: {{ .Values.volume.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.volume.persistentVolumeClaim.claimName }}
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - mountPath: {{ .Values.containers.mountPath }}
+              name: {{ .Values.volume.name }}
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /var/www/html/index.html
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}

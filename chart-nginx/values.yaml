@@ -1,0 +1,40 @@
+imagePullSecrets:
+  name: secretdockerhub
+
+name: nginx
+
+image:
+  repository: shaniben/shani-repo
+  tag: nginx
+  pullPolicy: IfNotPresent
+
+
+replicaCount: 1
+
+
+service:
+  type: ClusterIP
+  ports:
+    port: 80
+    targetPort: 80
+
+
+volume:
+  name: pv-storage
+  persistentVolumeClaim:
+    claimName: nginx-pvc2
+
+containers:
+  mountPath: "/var/www/html"
+
+resources:
+  limits:
+    cpu: "1000m"
+    memory: "90Mi"
+  requests:
+    cpu: "500m"
+    memory: "55Mi"
+
+livenessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 7

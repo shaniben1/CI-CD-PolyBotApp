@@ -1,0 +1,5 @@
+Welcome to Helm deployment
+
+
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
