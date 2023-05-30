@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: polybot-pvc
 spec:
-  storageClassName: manual
+  storageClassName: manualsc
   accessModes:
     - ReadWriteOnce
   resources:

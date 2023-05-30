@@ -23,7 +23,7 @@ spec:
       - name: secretdockerhub
 
       volumes:
-      - name: pv-storage
+      - name: nginx-pv-storage
         persistentVolumeClaim:
           claimName: nginx-pvc
       containers:
@@ -31,7 +31,7 @@ spec:
         image: shaniben/shani-repo:nginx
         volumeMounts:
         - mountPath: "/var/www/html"
-          name: pv-storage
+          name: nginx-pv-storage
 
         resources:
           requests:
