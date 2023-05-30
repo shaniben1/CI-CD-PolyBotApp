@@ -25,6 +25,8 @@ spec:
         volumeMounts:
         - mountPath: "/polybot/pvc"
           name: polybot-pv-storage
+        imagePullSecrets:
+          - name: secretdockerhub
 
 
         env:
@@ -33,8 +35,7 @@ spec:
             secretKeyRef:
               name: polybotsecret
               key: token
-        imagePullSecrets:
-         - name: secretdockerhub
+
 
         resources:
           requests:
