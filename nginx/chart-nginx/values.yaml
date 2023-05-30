@@ -22,7 +22,7 @@ service:
 volume:
   name: pv-storage
   persistentVolumeClaim:
-    claimName: nginx-pvc2
+    claimName: nginx-pvc
 
 containers:
   mountPath: "/var/www/html"
