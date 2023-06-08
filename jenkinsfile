@@ -41,7 +41,9 @@ pipeline {
                - name: jenkinsagent-pvc
                  mountPath: /var/run/docker.sock
                tty: true
-
+             securityContext:
+               allowPrivilegeEscalation: false
+               runAsUser: 0
         '''
                 }
              }
