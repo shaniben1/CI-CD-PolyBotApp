@@ -17,23 +17,20 @@ pipeline {
         //retry(2)
         timeout(time: 3, unit: 'MINUTES')
     }
- agent {
+    agent {
+       kubernetes {
 
-    kubernetes {
-
-      inheritFrom 'jenkins'
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          name: jenkins
-          namespace: jenkins
-          labels:
-            some-label: jenkins-eks-pod
-        spec:
-          serviceAccountName: jenkins-admin
-          containers:
-            - name: jenkins-agent
+         defaultContainer 'jenkins-agent'
+         yaml '''
+           apiVersion: v1
+           kind: Pod
+           metadata:
+             labels:
+               some-label: jenkins-eks-pod
+           spec:
+             serviceAccountName: jenkins-admin
+             containers:
+             - name: jenkins-agent
               image: shaniben/shani-repo:jenkins
               imagePullPolicy: Always
               tty: true
