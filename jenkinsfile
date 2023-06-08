@@ -20,7 +20,7 @@ pipeline {
     agent {
        kubernetes {
 
-         defaultContainer 'jenkins-agent'
+         //defaultContainer 'jenkins-agent'
          yaml '''
            apiVersion: v1
            kind: Pod
@@ -29,10 +29,17 @@ pipeline {
                some-label: jenkins-eks-pod
            spec:
              serviceAccountName: jenkins-admin
+             volumes:
+             - name: jenkinsagent-pvc
+               hostPath:
+                 path: /var/run/docker.sock
              containers:
              - name: jenkins-agent
-              image: shaniben/shani-repo:jenkins
-              imagePullPolicy: Always
+               image: shaniben/shani-repo:jenkins
+               imagePullPolicy: Always
+               volumeMounts:
+               - name: jenkinsagent-pvc
+                 mountPath: /var/run/docker.sock
               tty: true
 
         '''
