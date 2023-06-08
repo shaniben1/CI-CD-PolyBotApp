@@ -40,7 +40,7 @@ pipeline {
                volumeMounts:
                - name: jenkinsagent-pvc
                  mountPath: /var/run/docker.sock
-              tty: true
+               tty: true
 
         '''
                 }
