@@ -35,7 +35,7 @@ pipeline {
                  path: /var/run/docker.sock
              containers:
              - name: jenkins-agent
-               image: shaniben/shani-repo:jenkins
+               image: 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:jenkins
                imagePullPolicy: Always
                volumeMounts:
                - name: jenkinsagent-pvc
@@ -47,6 +47,7 @@ pipeline {
         '''
                 }
              }
+
 
 
 
