@@ -17,39 +17,6 @@ pipeline {
         //retry(2)
         timeout(time: 3, unit: 'MINUTES')
     }
-  agent {
-       kubernetes {
-
-         defaultContainer 'jenkins-agent'
-         yaml '''
-           apiVersion: v1
-           kind: Pod
-           metadata:
-             labels:
-               some-label: jenkins-eks-pod
-           spec:
-             serviceAccountName: jenkins-admin
-             volumes:
-             - name: jenkinsagent-pvc
-               hostPath:
-                 path: /var/run/docker.sock
-             containers:
-             - name: jenkins-agent
-               image: shaniben/shani-repo:jenkins
-               imagePullPolicy: Always
-               volumeMounts:
-               - name: jenkinsagent-pvc
-                 mountPath: /var/run/docker.sock
-               tty: true
-             securityContext:
-               allowPrivilegeEscalation: false
-               runAsUser: 0
-        '''
-                }
-             }
-
-
-
 
 //    agent{
 //        docker{
@@ -57,6 +24,44 @@ pipeline {
 //              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
 //               }
 //    }
+
+
+
+//  agent {
+//       kubernetes {
+
+//         defaultContainer 'jenkins-agent'
+//         yaml '''
+//           apiVersion: v1
+//           kind: Pod
+//          metadata:
+//            labels:
+//               some-label: jenkins-eks-pod
+//          spec:
+//             serviceAccountName: jenkins-admin
+//             volumes:
+//             - name: jenkinsagent-pvc
+//               hostPath:
+//                 path: /var/run/docker.sock
+//             containers:
+//             - name: jenkins-agent
+//               image: shaniben/shani-repo:jenkins
+//               imagePullPolicy: Always
+//               volumeMounts:
+//               - name: jenkinsagent-pvc
+//                 mountPath: /var/run/docker.sock
+//               tty: true
+//             securityContext:
+//               allowPrivilegeEscalation: false
+//               runAsUser: 0
+//        '''
+//                }
+//             }
+
+    agent {label 'ec2-jenkins-agent' }
+
+
+
 
 
     //insert credential to environment variable
