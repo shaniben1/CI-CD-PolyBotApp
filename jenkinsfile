@@ -1,5 +1,4 @@
 
-
 library 'shared-lib-int@main'
 //@Library("shared-lib-int") _
 import hudson.*;
@@ -18,14 +17,6 @@ pipeline {
         timeout(time: 3, unit: 'MINUTES')
     }
 
-//    agent{
-//        docker{
-//              image 'jenkins-agent:latest'
-//              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-//               }
-//    }
-
-
 
   agent {
        kubernetes {
@@ -34,10 +25,10 @@ pipeline {
          yaml '''
            apiVersion: v1
            kind: Pod
-          metadata:
-            labels:
+           metadata:
+             labels:
                some-label: jenkins-eks-pod
-          spec:
+           spec:
              serviceAccountName: jenkins-admin
              volumes:
              - name: jenkinsagent-pvc
@@ -58,10 +49,15 @@ pipeline {
                 }
              }
 
-//    agent {label 'ec2-fleet' }
 
 
-
+// agent -> container
+//    agent{
+//        docker{
+//              image 'jenkins-agent:latest'
+//              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+//               }
+//    }
 
 
     //insert credential to environment variable
@@ -121,7 +117,7 @@ pipeline {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
                    sh "docker login --username $user --password $pass"
-                   sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+                    sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
               }
             }
          }
@@ -140,4 +136,6 @@ pipeline {
 
 
 }//close pipeline
+
+
 
