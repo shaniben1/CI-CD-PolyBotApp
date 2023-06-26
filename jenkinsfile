@@ -28,7 +28,7 @@ pipeline {
 
 
   agent {
-       eks {
+       kubernetes {
 
          defaultContainer 'jenkins-agent'
          yaml '''
@@ -121,7 +121,7 @@ pipeline {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
                    sh "docker login --username $user --password $pass"
-                    sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+                   sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
               }
             }
          }
