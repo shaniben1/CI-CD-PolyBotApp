@@ -2,7 +2,7 @@
 
 library 'shared-lib-int@main'
 //@Library("shared-lib-int") _
-//import hudson.*;
+import hudson.*;
 
 //dict
 //generic-build("snykToken","telegramToken","polybot","dockerhub")
