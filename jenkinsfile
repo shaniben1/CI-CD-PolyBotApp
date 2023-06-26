@@ -49,7 +49,7 @@ pipeline {
                 }
              }
 
-
+//  agent {label 'ec2-fleet' }
 
 // agent -> container
 //    agent{
