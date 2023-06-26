@@ -27,38 +27,38 @@ pipeline {
 
 
 
-//  agent {
-//       kubernetes {
+  agent {
+       eks {
 
-//         defaultContainer 'jenkins-agent'
-//         yaml '''
-//           apiVersion: v1
-//           kind: Pod
-//          metadata:
-//            labels:
-//               some-label: jenkins-eks-pod
-//          spec:
-//             serviceAccountName: jenkins-admin
-//             volumes:
-//             - name: jenkinsagent-pvc
-//               hostPath:
-//                 path: /var/run/docker.sock
-//             containers:
-//             - name: jenkins-agent
-//               image: shaniben/shani-repo:jenkins
-//               imagePullPolicy: Always
-//               volumeMounts:
-//               - name: jenkinsagent-pvc
-//                 mountPath: /var/run/docker.sock
-//               tty: true
-//             securityContext:
-//               allowPrivilegeEscalation: false
-//               runAsUser: 0
-//        '''
-//                }
-//             }
+         defaultContainer 'jenkins-agent'
+         yaml '''
+           apiVersion: v1
+           kind: Pod
+          metadata:
+            labels:
+               some-label: jenkins-eks-pod
+          spec:
+             serviceAccountName: jenkins-admin
+             volumes:
+             - name: jenkinsagent-pvc
+               hostPath:
+                 path: /var/run/docker.sock
+             containers:
+             - name: jenkins-agent
+               image: shaniben/shani-repo:jenkins
+               imagePullPolicy: Always
+               volumeMounts:
+               - name: jenkinsagent-pvc
+                 mountPath: /var/run/docker.sock
+               tty: true
+             securityContext:
+               allowPrivilegeEscalation: false
+               runAsUser: 0
+        '''
+                }
+             }
 
-    agent {label 'ec2-fleet' }
+//    agent {label 'ec2-fleet' }
 
 
 
