@@ -128,7 +128,8 @@ pipeline {
 
         post{
           always{
-            junit allowEmptyResults: true, testResults: 'results.xml'
+            //junit allowEmptyResults: true, testResults: 'results.xml'
+            junit testResults: 'results.xml', skipPublishingChecks: true
             // sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
             }
 
