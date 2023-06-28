@@ -1,12 +1,13 @@
 # Jenkins Agent
-FROM jenkins/inbound-agent:4.7-1
+FROM jenkins/inbound-agent
 
 USER root
 
 # install packages
 RUN apt-get -y update \
     && apt-get -y upgrade \
-    && apt-get -y install sudo curl bash jq python3 python3-pip
+    && apt-get -y install sudo curl bash jq python3 python3-pip \
+
 
 # install AWS CLI
 RUN set +x \
