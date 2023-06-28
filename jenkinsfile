@@ -103,12 +103,24 @@ pipeline {
                     }
 
 
+//        stage('Build Bot app') {
+//             steps {
+//                   sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
+
+//                  }
+//                 }
+
+     //build with tag to ECR repo
         stage('Build Bot app') {
              steps {
-                   sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
+                  sh "docker build -t shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} . "
+                  sh "docker tag shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER}"
 
                    }
                  }
+
+
+
 
 
         stage('snyk test - Bot image') {
