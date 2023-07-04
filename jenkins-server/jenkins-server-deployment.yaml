@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-server-deployment
+  labels:
+    app: jenkins-server
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: jenkins-server
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkins-server
+        tier: backend
+    spec:
+      volumes:
+      - name: jenkins-server-pv-storage
+        persistentVolumeClaim:
+          claimName: jenkins-server-pvc
+      containers:
+      - name: jenkins-server
+        image: jenkins/jenkins:lts-jdk11
+        volumeMounts:
+        - mountPath: "/var/lib/jenkins"
+          name: jenkins-server-pv-storage
+
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "55Mi"
+          limits:
+            cpu: "1"
+            memory: "90Mi"
