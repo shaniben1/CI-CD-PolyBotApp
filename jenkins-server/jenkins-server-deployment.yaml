@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins-server-deployment
+  name: jenkins-server
   labels:
     app: jenkins-server
     tier: backend
