@@ -30,6 +30,8 @@ spec:
           volumeMounts:
           - mountPath: "/var/lib/jenkins"
             name: jenkins-server-pv-storage
+          ports:
+            - containerPort: 80
 
           resources:
             requests:
