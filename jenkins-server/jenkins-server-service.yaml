@@ -4,8 +4,6 @@ metadata:
   name: jenkins-server-service
   labels:
     app: jenkins-server
-    tier: backend
-
 spec:
   type: ClusterIP
   ports:
@@ -14,4 +12,3 @@ spec:
     targetPort: 8080
   selector:
     app: jenkins-server
-    tier: backend

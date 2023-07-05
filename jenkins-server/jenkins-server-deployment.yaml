@@ -4,7 +4,6 @@ metadata:
   name: jenkins-server
   labels:
     app: jenkins-server
-    tier: backend
 spec:
   securityContext:
     fsGroup: 1000
@@ -12,13 +11,11 @@ spec:
   selector:
     matchLabels:
       app: jenkins-server
-      tier: backend
   replicas: 1
   template:
     metadata:
       labels:
         app: jenkins-server
-        tier: backend
     spec:
       volumes:
       - name: jenkins-server-pv-storage
