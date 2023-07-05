@@ -39,5 +39,5 @@ spec:
               command:
                 - cat
                 - /var/www/html/index.html
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            initialDelaySeconds: 5
+            periodSeconds: 7

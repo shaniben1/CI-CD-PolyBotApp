@@ -6,6 +6,9 @@ metadata:
     app: jenkins-server
     tier: backend
 spec:
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 1000
   selector:
     matchLabels:
       app: jenkins-server
@@ -22,16 +25,17 @@ spec:
         persistentVolumeClaim:
           claimName: jenkins-server-pvc
       containers:
-      - name: jenkins-server
-        image: jenkins/jenkins:lts-jdk11
-        volumeMounts:
-        - mountPath: "/var/lib/jenkins"
-          name: jenkins-server-pv-storage
+        - name: jenkins-server
+          image: jenkins/jenkins:lts-jdk11
+          volumeMounts:
+          - mountPath: "/var/lib/jenkins"
+            name: jenkins-server-pv-storage
 
-        resources:
-          requests:
-            cpu: "0.5"
-            memory: "55Mi"
-          limits:
-            cpu: "1"
-            memory: "90Mi"
+          resources:
+            requests:
+              cpu: "1"
+              memory: "1Gi"
+            limits:
+              cpu: "2"
+              memory: "3Gi"
+
