@@ -31,8 +31,7 @@ spec:
           - mountPath: "/var/lib/jenkins"
             name: jenkins-server-pv-storage
           ports:
-            - containerPort: 80
-
+            - containerPort: 8080
           resources:
             requests:
               cpu: "1"
