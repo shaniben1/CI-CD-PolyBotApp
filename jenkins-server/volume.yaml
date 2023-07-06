@@ -30,7 +30,8 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - ip-192-168-83-142.eu-west-1.compute.internal
+          - minikube
+          #- ip-192-168-83-142.eu-west-1.compute.internal
 
 ---
 apiVersion: v1
