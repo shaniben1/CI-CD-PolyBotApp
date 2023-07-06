@@ -9,13 +9,13 @@ volumeBindingMode: WaitForFirstConsumer
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jenkins-pv-volume
+  name: jenkins-pv-volume2
   labels:
     type: local
 spec:
   storageClassName: local-storage-minikube
   claimRef:
-    name: jenkins-pv-claim
+    name: jenkins-pv-claim2
     namespace: shani-jenkins
   capacity:
     storage: 10Gi
@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jenkins-pv-claim
+  name: jenkins-pv-claim2
   namespace: shani-jenkins
 spec:
   storageClassName: local-storage-minikube
