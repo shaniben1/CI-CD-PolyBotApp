@@ -13,3 +13,5 @@ spec:
   csi:
     driver: efs.csi.aws.com
     volumeHandle: fs-00d1fbb75d681724f #change to my efs
+    volumeAttributes:
+      path: /var/lib/jenkins
