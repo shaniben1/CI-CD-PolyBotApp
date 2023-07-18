@@ -1,0 +1,10 @@
+#here we connect the sc directory to our app (dont need pv)
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: fs-0afcb65d9ccb39a2d # my efs
+  directoryPerms: "700"
