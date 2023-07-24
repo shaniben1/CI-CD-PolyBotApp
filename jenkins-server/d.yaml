@@ -21,6 +21,6 @@ spec:
       containers:
       - name: jenkins
         image: 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:jenkins-server
-        volumeMounts:
-        - name: jenkins-server-data
-          mountPath: /tmp
+        #volumeMounts:
+        #- name: jenkins-server-data
+        #  mountPath: /tmp
