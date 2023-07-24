@@ -24,6 +24,12 @@ spec:
       containers:
       - name: jenkins
         image: 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:jenkins-server
+        initContainers:
+          - name: fix-permissions
+            image: busybox
+            command: [ "sh", "-c", "chown -R 1000:1000 /var/jenkins_home" ]
+            securityContext:
+              privileged: true
         volumeMounts:
         - name: jenkins-server-data
           mountPath: /var/jenkins_home
