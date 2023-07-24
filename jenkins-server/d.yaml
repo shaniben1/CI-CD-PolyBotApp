@@ -14,6 +14,9 @@ spec:
        app:  jenkins-server
        tier: backend
    spec:
+      securityContext:
+       fsGroup: 1000
+       runAsUser: 1000
       volumes:
       - name: jenkins-server-data
         persistentVolumeClaim:
