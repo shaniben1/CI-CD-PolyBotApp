@@ -32,6 +32,13 @@ spec:
               containerPort: 8080
             - name: jnlpport
               containerPort: 50000
+
+          initContainers:
+            - name: fix-permissions
+              image: busybox
+              command: [ "sh", "-c", "chown -R 1000:1000 /var/jenkins_home" ]
+              securityContext:
+                privileged: true
           livenessProbe:
             httpGet:
               path: "/login"
