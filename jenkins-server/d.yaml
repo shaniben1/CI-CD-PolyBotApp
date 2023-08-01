@@ -20,7 +20,7 @@ spec:
       volumes:
       - name: jenkins-server-data
         persistentVolumeClaim:
-          claimName: shani-pvc-efs
+          claimName: shanid-pvc
       containers:
       - name: jenkins
         image: 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:jenkins-server
