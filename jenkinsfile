@@ -31,7 +31,7 @@ pipeline {
 
           containers:
           - name: jenkins-agent
-            image:shaniben/shani-repo:jenkins
+            image: shaniben/shani-repo:jenkins
             imagePullPolicy: Always
             volumeMounts:
              - name: jenkinsagent-pvc
