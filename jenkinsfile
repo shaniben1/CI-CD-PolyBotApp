@@ -20,19 +20,14 @@ pipeline {
     agent {
     kubernetes {
 
-      label 'jenkins-eks-pod'
       defaultContainer 'jenkins-agent'
-      cloud 'EKS'
+      //cloud 'EKS'
 
       yaml '''
         apiVersion: v1
         kind: Pod
-        metadata:
-          labels:
-            some-label: jenkins-eks-pod
         spec:
           serviceAccountName: jenkins-admin
-          securityContext:
 
           containers:
           - name: jenkins-agent
@@ -154,7 +149,6 @@ pipeline {
 
 
 
-        //push DockerHub
         //stage('push image to DockerHub repo') {
         //    steps {
         //       withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
@@ -167,7 +161,6 @@ pipeline {
         //    }
         // }
 
-        //push ECR
         stage('push image to ECR repo') {
             steps {
                withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}" , "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}" , "AWS_REGION=${env.AWS_REGION}"]){
@@ -177,6 +170,10 @@ pipeline {
                }
             }
          }
+
+
+
+
 
     }//close stages
 
