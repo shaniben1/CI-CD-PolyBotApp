@@ -17,40 +17,40 @@ pipeline {
         timeout(time: 3, unit: 'MINUTES')
     }
 
-    agent {
-    kubernetes {
+//    agent {
+//    kubernetes {
 
-      defaultContainer 'jenkins-agent'
+//      defaultContainer 'jenkins-agent'
       //cloud 'EKS'
 
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-          serviceAccountName: jenkins-admin
+//      yaml '''
+//        apiVersion: v1
+//        kind: Pod
+//       spec:
+//          serviceAccountName: jenkins-admin
 
-          containers:
-          - name: jenkins-agent
-            image: shaniben/shani-repo:jenkins
-            imagePullPolicy: Always
-            volumeMounts:
-             - name: jenkinsagent-pvc
-               mountPath: /var/run/docker.sock
-            tty: true
-          volumes:
-          - name: jenkinsagent-pvc
-            hostPath:
-              path: /var/run/docker.sock
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsUser: 0
-        '''
-    }
-  }
+//          containers:
+//          - name: jenkins-agent
+//            image: shaniben/shani-repo:jenkins
+//            imagePullPolicy: Always
+//            volumeMounts:
+//             - name: jenkinsagent-pvc
+//               mountPath: /var/run/docker.sock
+//            tty: true
+//          volumes:
+//          - name: jenkinsagent-pvc
+//            hostPath:
+//             path: /var/run/docker.sock
+//          securityContext:
+//            allowPrivilegeEscalation: false
+//            runAsUser: 0
+//        '''
+//    }
+//  }
 
 
 
-//    agent {label 'ec2-fleet' }
+    agent {label 'ec2-fleet' }
 
 
 
