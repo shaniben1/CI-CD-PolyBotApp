@@ -49,17 +49,17 @@ pipeline {
 
 
 
-    agent {label 'ec2-fleet' }
+//    agent {label 'ec2-fleet' }
 
 
 
 
-//    agent{
-//        docker{
-//              image 'jenkins-agent:latest'
-//              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-//               }
-//    }
+    agent{
+        docker{
+              image 'jenkins-agent:latest'
+              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+               }
+    }
 
 
     //insert credential to environment variable
@@ -103,64 +103,61 @@ pipeline {
 
 
         //build with tag to dockerHub repo
-        //stage('Build Bot app') {
-        //     steps {
-        //           sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
-
-        //           }
-        //         }
-
-        //build with tag to ECR repo
         stage('Build Bot app') {
              steps {
-                  sh "docker build -t shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} . "
-                  sh "docker tag shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER}"
+                   sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
 
                    }
                  }
+
+        //build with tag to ECR repo
+        //stage('Build Bot app') {
+        //     steps {
+        //          sh "docker build -t shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} . "
+        //          sh "docker tag shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER}"
+
+        //           }
+        //         }
 
 
 
 
         //snyk test for an image which saved in DockerHub
-        //stage('snyk test - Bot image') {
-        //    steps {
-        //        sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
-        //          }
-        //       }
-
-
-        //snyk test for an image which saved in ECR
         stage('snyk test - Bot image') {
             steps {
-                sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
+                sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
                   }
                }
 
 
-
-
-        //stage('push image to DockerHub repo') {
+        //snyk test for an image which saved in ECR
+        //stage('snyk test - Bot image') {
         //    steps {
-        //       withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
-        //           sh "docker login --username $user --password $pass"
-        //            sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+        //        sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
+        //          }
+        //       }
 
 
 
-        //      }
-        //    }
-        // }
 
-        stage('push image to ECR repo') {
+        stage('push image to DockerHub repo') {
             steps {
-               withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}" , "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}" , "AWS_REGION=${env.AWS_REGION}"]){
-                    sh 'docker login -u AWS -p $(aws ecr get-login-password --region eu-west-1) 019273956931.dkr.ecr.eu-west-1.amazonaws.com'
-                    sh "docker push 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER}"
-
-               }
+               withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
+                   sh "docker login --username $user --password $pass"
+                    sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+              }
             }
          }
+
+        //stage('push image to ECR repo') {
+        //    steps {
+        //       withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}" , "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}" , "AWS_REGION=${env.AWS_REGION}"]){
+        //            sh 'docker login -u AWS -p $(aws ecr get-login-password --region eu-west-1) 019273956931.dkr.ecr.eu-west-1.amazonaws.com'
+        //            sh "docker push 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER}"
+
+        //       }
+        //    }
+        // }
 
     }//close stages
 
