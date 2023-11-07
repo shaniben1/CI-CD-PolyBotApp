@@ -1,4 +1,4 @@
-library 'Jenkins-SharedLibrary@main'
+//library 'Jenkins-SharedLibrary@main'
 //library 'shared-lib-int@main'
 //@Library("shared-lib-int") _
 import hudson.*;
