@@ -86,14 +86,14 @@ pipeline {
                         }
                     }
 
-           stage('pylint') {
-                         steps {
-                         catchError(message:'pylint ERROR',buildResult:'UNSTABLE',stageResult:'UNSTABLE'){
-                              script {
-                                     log.info 'Starting'
-                                     log.warning 'Nothing to do!'
-                                     sh "python3 -m pylint *.py || true"
-                                     }
+                   stage('pylint') {
+                        steps {
+                            catchError(message:'pylint ERROR',buildResult:'UNSTABLE',stageResult:'UNSTABLE'){
+                                script {
+                                    log.info 'Starting'
+                                    log.warning 'Nothing to do!'
+                                    sh "python3 -m pylint *.py || true"
+                                       }
                                   }
                                }
                             }
