@@ -62,7 +62,14 @@ pipeline {
 //               }
 //    }
 
-
+   agent {
+        dockerfile {
+            filename 'JenkinsAgent.Dockerfile' // Name of the dynamically generated Dockerfile
+            dir 'CI-CD-PolyBotApp/JenkinsAgent.Dockerfile' // Directory containing the Dockerfile
+            label 'jenkins-agent' // Label for the agent
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // Optional arguments for the Docker container
+        }
+    }
     agent{
         dockerfile{ JenkinsAgent.Dockerfile true
               args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
