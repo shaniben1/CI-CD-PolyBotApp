@@ -165,10 +165,12 @@ pipeline {
         post{
           always{
             junit allowEmptyResults: true, testResults: 'results.xml'
-            // sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+            sh "docker rmi shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
             }
 
+
        }
+
 
 
 
