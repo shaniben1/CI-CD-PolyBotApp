@@ -55,13 +55,19 @@ pipeline {
 
 
 
+//    agent{
+//        docker{
+//              image 'jenkins-agent:latest'
+//              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+//               }
+//    }
+
+
     agent{
-        docker{
-              image 'jenkins-agent:latest'
+        dockerfile{ JenkinsAgent.Dockerfile true
               args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
                }
     }
-
 
     //insert credential to environment variable
     //insert to specific environment variable (must this name: SNYK_TOKEN) my snyk's token
