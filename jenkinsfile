@@ -55,21 +55,20 @@ pipeline {
 
 
 
-//    agent{
-//        docker{
-//              image 'jenkins-agent:latest'
-//              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-//               }
-//    }
-
-   agent {
-        dockerfile {
-            filename 'JenkinsAgent.Dockerfile' // Name of the dynamically generated Dockerfile
-            dir 'CI-CD-PolyBotApp/JenkinsAgent.Dockerfile' // Directory containing the Dockerfile
-            label 'jenkins-agent' // Label for the agent
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // Optional arguments for the Docker container
-        }
+    agent{
+        docker{
+              image 'jenkins-agent:latest'
+              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+               }
     }
+
+//   agent {
+//            filename 'JenkinsAgent.Dockerfile' // Name of the dynamically generated Dockerfile
+//            dir 'CI-CD-PolyBotApp/JenkinsAgent.Dockerfile' // Directory containing the Dockerfile
+//            label 'jenkins-agent' // Label for the agent
+//            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // Optional arguments for the Docker container
+//        }
+//    }
 
 
     //insert credential to environment variable
