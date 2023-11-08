@@ -70,11 +70,7 @@ pipeline {
             args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // Optional arguments for the Docker container
         }
     }
-    agent{
-        dockerfile{ JenkinsAgent.Dockerfile true
-              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-               }
-    }
+
 
     //insert credential to environment variable
     //insert to specific environment variable (must this name: SNYK_TOKEN) my snyk's token
