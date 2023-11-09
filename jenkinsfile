@@ -61,7 +61,11 @@ pipeline {
 //    }
 
 
-
+    //insert credential to environment variable
+    //insert to specific environment variable (must this name: SNYK_TOKEN) my snyk's token
+    environment{
+        SNYK_TOKEN=credentials('snykToken')
+    }
 
 
     agent any
@@ -106,20 +110,6 @@ pipeline {
             }
         }
     }
-}
-
-
-pipeline {
-
-    options {
-        buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
-        disableConcurrentBuilds()
-        timestamps()
-        //retry(2)
-        timeout(time: 3, unit: 'MINUTES')
-    }
-
-
 
 
 
@@ -133,15 +123,11 @@ pipeline {
 
 
 
-    //insert credential to environment variable
-    //insert to specific environment variable (must this name: SNYK_TOKEN) my snyk's token
-    environment{
-        SNYK_TOKEN=credentials('snykToken')
-    }
 
 
 
-    stages {
+
+//    stages {
         stage('Test') {
            parallel {
                    stage('pytest'){
