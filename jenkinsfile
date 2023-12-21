@@ -17,48 +17,49 @@ pipeline {
         timeout(time: 3, unit: 'MINUTES')
     }
 
-//    agent {
-//    kubernetes {
 
-//      defaultContainer 'jenkins-agent'
+/*
+    agent {
+    kubernetes {
+
+      defaultContainer 'jenkins-agent'
       //cloud 'EKS'
 
-//      yaml '''
-//        apiVersion: v1
-//        kind: Pod
-//       spec:
-//          serviceAccountName: jenkins-admin
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+       spec:
+          serviceAccountName: jenkins-admin
 
-//          containers:
-//          - name: jenkins-agent
-//            image: shaniben/shani-repo:jenkins
-//            imagePullPolicy: Always
-//            volumeMounts:
-//             - name: jenkinsagent-pvc
-//               mountPath: /var/run/docker.sock
-//            tty: true
-//          volumes:
-//          - name: jenkinsagent-pvc
-//            hostPath:
-//             path: /var/run/docker.sock
-//          securityContext:
-//            allowPrivilegeEscalation: false
-//            runAsUser: 0
-//        '''
-//    }
-//  }
-
-
+          containers:
+          - name: jenkins-agent
+            image: shaniben/shani-repo:jenkins
+            imagePullPolicy: Always
+            volumeMounts:
+             - name: jenkinsagent-pvc
+               mountPath: /var/run/docker.sock
+            tty: true
+          volumes:
+          - name: jenkinsagent-pvc
+            hostPath:
+             path: /var/run/docker.sock
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+        '''
+    }
+  }
+*/
 
 //    agent {label 'ec2-fleet' }
 
 
-//    agent{
-//        docker{
-//              image 'jenkins-agent:latest'
-//              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-//               }
-//    }
+    agent{
+        docker{
+              image 'jenkins-agent:latest'
+              args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+               }
+    }
 
 
     //insert credential to environment variable
@@ -67,7 +68,7 @@ pipeline {
         SNYK_TOKEN=credentials('snykToken')
     }
 
-
+/*
     agent any
 
     stages {
@@ -120,8 +121,7 @@ pipeline {
                }
     }
 
-
-
+*/
 
 
 
@@ -159,45 +159,46 @@ pipeline {
 
 
 
-        //build
+        //build image dockerhub
         stage('Build Bot app') {
              steps {
                    sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
 
                    }
                  }
+/*
+        //build image ECR
+        stage('Build Bot app') {
+             steps {
+                  sh "docker build -t shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} . "
+                  sh "docker tag shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER}"
+
+                   }
+                 }
+
+*/
 
 
-        //stage('Build Bot app') {
-        //     steps {
-        //          sh "docker build -t shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} . "
-        //          sh "docker tag shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER}"
-
-        //           }
-        //         }
-
-
-
-
-        //snyk test for an image which saved in DockerHub
+   //snyk - test image
+   //dockerhub
         stage('snyk test - Bot image') {
             steps {
                 sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
+
                   }
                }
 
+   //ECR
+   /*
+        stage('snyk test - Bot image') {
+            steps {
+                sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
 
-        //snyk test for an image which saved in ECR
-        //stage('snyk test - Bot image') {
-        //    steps {
-        //        sh "snyk container test --severity-threshold=critical --policy-path=PolyBot/.snyk 019273956931.dkr.ecr.eu-west-1.amazonaws.com/shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} --file=Dockerfile || true"
-        //          }
-        //       }
+                  }
+               }
+*/
 
-
-
-
-        stage('push image to DockerHub repo') {
+        stage('push image to DockerHub') {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
                    sh "docker login --username $user --password $pass"
