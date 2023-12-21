@@ -159,7 +159,7 @@ pipeline {
 
 
 
-        //build with tag to dockerHub repo
+        //build
         stage('Build Bot app') {
              steps {
                    sh "docker build -t shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER} . "
@@ -167,7 +167,7 @@ pipeline {
                    }
                  }
 
-        //build with tag to ECR repo
+
         //stage('Build Bot app') {
         //     steps {
         //          sh "docker build -t shani-ecr-repo:poly-bot-${env.BUILD_NUMBER} . "
@@ -201,7 +201,7 @@ pipeline {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]){
                    sh "docker login --username $user --password $pass"
-                    sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
+                   sh "docker push shaniben/shani-repo:poly-bot-${env.BUILD_NUMBER}"
               }
             }
          }
