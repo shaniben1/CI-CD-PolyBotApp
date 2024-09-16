@@ -1,9 +1,5 @@
 pipeline {
     agent any
-
-
-
-
     stages {
         stage('Unittest') {
             steps {
@@ -13,8 +9,10 @@ pipeline {
         stage('Functional test') {
             steps {
                 echo "testing"
+            }
+          }
 
-        }
-    }
 
+
+      }
 }
